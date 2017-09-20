@@ -65,5 +65,17 @@ public class DateValid {
 	  return false;
      }
    }
+   
+   public static void main(String[] args){
+	   DateValid dateValid = new DateValid(); //we need to create a new object of this class because a static method can only 
+	   										 // call static methods directly
+	   
+	   // Format: dd/mm/yyyy
+	   String dateVal = "20/09/2017";
+	   System.out.println(dateValid.validate(dateVal));
+	   
+   }
+   
+   
 }
 

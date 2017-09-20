@@ -1,6 +1,6 @@
 package perso.simen.coursework.utilities;
 
-public class Utiities {
+public class Utilities {
 
 
 
@@ -9,6 +9,13 @@ public boolean isValidEmailAddress(String email) {
 	java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
 	java.util.regex.Matcher m = p.matcher(email);
 	return m.matches();
+}
+
+
+public static void main(String args[]){
+	String emailVal = "test@test.co.uk";
+	Utilities utilities = new Utilities();
+	System.out.println(utilities.isValidEmailAddress(emailVal));
 }
 
 }

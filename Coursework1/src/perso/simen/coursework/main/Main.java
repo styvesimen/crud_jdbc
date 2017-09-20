@@ -5,21 +5,31 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
+
+import perso.simen.coursework.utilities.DateValid;
 
 
 
 public class Main {
+	
+	static DateValid dateValid;
 
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, ParseException {
 		
+		if (dateValid == null){
+			dateValid = new DateValid();
+		}
 		
 		System.out.println("====== Customer Management =======\n\n");
 		Scanner scanner = new Scanner(System.in);
 		showInputForm(scanner);
 	}
 
-public static void showInputForm(Scanner scanner) throws ClassNotFoundException, SQLException{
+public static void showInputForm(Scanner scanner) throws ClassNotFoundException, SQLException, ParseException{
 	
 	//Connection connection = null;
 	
@@ -38,7 +48,7 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 	if(choice == 1){
 	
 		try{
-			
+			SimpleDateFormat myFormat = new SimpleDateFormat("dd MM yyyy");
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "12345");
 			
@@ -51,16 +61,24 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			String firstname = scanner.next();
 			System.out.println("Name : ");
 			String name = scanner.next();
-			System.out.println("Date of Birth : ");
-			String dob = scanner.next();
-			boolean d =isThisDateValid(dob, "dd/mm/yyyy");
+			
 			System.out.println("Email : ");
 			String email = scanner.next();
 			
+			scanner.nextLine();
 			
-			mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
+			System.out.println("Date of Birth (dd/mm/yyyy): ");
+			String dob = scanner.nextLine();
+			if(dateValid.validate(dob)){
+			   mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
+			}else{
+				System.out.println("The date format is not appropriate !");
+				showInputForm(scanner);
+			}
+			
+			
 			System.out.println("insert complete successfully");
-		
+			
 		}catch(ClassNotFoundException e){
 			e.printStackTrace();
 		}catch(SQLException ex){
