@@ -53,8 +53,10 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			String name = scanner.next();
 			System.out.println("Date of Birth : ");
 			String dob = scanner.next();
+			boolean d =isThisDateValid(dob, "dd/mm/yyyy");
 			System.out.println("Email : ");
 			String email = scanner.next();
+			
 			
 			mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
 			System.out.println("insert complete successfully");
@@ -96,6 +98,7 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			String dob1 = scanner.next();
 			System.out.println("Email : ");
 			String email1 = scanner.next();
+				
 
 
 			ResultSet rs = mystmt.executeQuery("select * from Customer"); 
@@ -193,6 +196,15 @@ if(choice == 4){
 }
 	}
 
+
+	public boolean isValidEmailAddress(String email) {
+		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+		java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+		java.util.regex.Matcher m = p.matcher(email);
+		return m.matches();
+	}
+
+	
 }
 
 
