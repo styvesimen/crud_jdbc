@@ -27,7 +27,7 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 	System.out.println("====== 1- Add a new Customer =======");
 	System.out.println("====== 2- Edit a Customer Details =======");
 	System.out.println("====== 3- Delete a Customer =======");
-	System.out.println("====== 3- See all the Customers  =======");
+	System.out.println("====== 4- See all the Customers  =======");
 	
 	
 	int choice = scanner.nextInt();
@@ -45,7 +45,7 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			Statement mystmt = connection.createStatement();	
 			
 			System.out.println("=======Please fill the form of the new user=======\n");
-			System.out.println("Enter the id od the new customer : ");
+			System.out.println("Enter the id of the new customer : ");
 			int id = scanner.nextInt();
 			System.out.println("Firstname : ");
 			String firstname = scanner.next();
