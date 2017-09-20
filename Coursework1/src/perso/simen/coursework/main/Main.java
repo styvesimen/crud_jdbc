@@ -10,18 +10,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-import perso.simen.coursework.utilities.DateValid;
+import perso.simen.coursework.utilities.Validator;
 
 
 
 public class Main {
 	
-	static DateValid dateValid;
+	static Validator dateValid;
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, ParseException {
 		
 		if (dateValid == null){
-			dateValid = new DateValid();
+			dateValid = new Validator();
 		}
 		
 		System.out.println("====== Customer Management =======\n\n");
@@ -42,13 +42,10 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 	
 	int choice = scanner.nextInt();
 	
-	
-	
-	
 	if(choice == 1){
 	
 		try{
-			SimpleDateFormat myFormat = new SimpleDateFormat("dd MM yyyy");
+			//SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "12345");
 			
@@ -64,21 +61,19 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			
 			System.out.println("Email : ");
 			String email = scanner.next();
-			
 			scanner.nextLine();
-			
 			System.out.println("Date of Birth (dd/mm/yyyy): ");
-			String dob = scanner.nextLine();
-			if(dateValid.validate(dob)){
-			   mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
-			}else{
-				System.out.println("The date format is not appropriate !");
-				showInputForm(scanner);
+			int r =getDOBInput(scanner, mystmt, id, firstname, name, email);
+			if(r==1){
+				System.out.println("insert complete successfully");
 			}
-			
-			
-			System.out.println("insert complete successfully");
-			
+			else{
+				System.out.println("\n Do you want to try again ? y/n");
+				String wantToTryAgain = scanner.next();
+				if (wantToTryAgain.equalsIgnoreCase("y")){
+					showInputForm(scanner);
+				}
+			}
 		}catch(ClassNotFoundException e){
 			e.printStackTrace();
 		}catch(SQLException ex){
@@ -104,7 +99,6 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "12345");
 			Statement mystmt = connection.createStatement();	
 			
-			
 			System.out.println("=======UPDATE User Details=======\n");
 			System.out.println("Enter the id of the customer you want to update: ");
 			int id1 = scanner.nextInt();
@@ -117,8 +111,6 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			System.out.println("Email : ");
 			String email1 = scanner.next();
 				
-
-
 			ResultSet rs = mystmt.executeQuery("select * from Customer"); 
 			while(rs.next()){ 
 				System.out.println(rs.getInt(1)+"\t\t"+rs.getString(2)+"\t\t"+rs.getString(3)+"\t\t"+rs.getString(4)+"\t\t"+rs.getString(5)+"\t\t");
@@ -215,11 +207,71 @@ if(choice == 4){
 	}
 
 
+	private static int DOBInput(Scanner scanner, Statement mystmt, int id, String firstname, String name, String email) {
+		String dob = scanner.nextLine();
+		if(dateValid.validate(dob)){
+		   try {
+			mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
+			int result = 1;
+			return result;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}else{
+			System.out.println("The date format is not appropriate !");
+			
+			try {
+				showInputForm(scanner);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return 0;
+}
+
 	public boolean isValidEmailAddress(String email) {
 		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
 		java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
 		java.util.regex.Matcher m = p.matcher(email);
 		return m.matches();
+	}
+	
+	private static int getDOBInput(Scanner scanner, Statement mystmt, int id, String firstname, String name, String email){
+		String dob = scanner.nextLine();
+		if(dateValid.validate(dob)){
+		   try {
+			   mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
+			int result = 1;
+			return result;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}else{
+			System.out.println("The date format is not appropriate !");
+			
+			try {
+				showInputForm(scanner);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return 0;
 	}
 
 	

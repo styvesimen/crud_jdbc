@@ -3,7 +3,10 @@ package perso.simen.coursework.utilities;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DateValid {
+
+// make this class singleton
+
+public class Validator {
 
 
   private Pattern pattern;
@@ -12,7 +15,7 @@ public class DateValid {
   private static final String DATE_PATTERN =
           "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)";
 
-  public DateValid(){
+  public Validator(){
 	  pattern = Pattern.compile(DATE_PATTERN);
   }
 
@@ -67,14 +70,25 @@ public class DateValid {
    }
    
    public static void main(String[] args){
-	   DateValid dateValid = new DateValid(); //we need to create a new object of this class because a static method can only 
+	   Validator dateValid = new Validator(); //we need to create a new object of this class because a static method can only 
 	   										 // call static methods directly
-	   
 	   // Format: dd/mm/yyyy
 	   String dateVal = "20/09/2017";
 	   System.out.println(dateValid.validate(dateVal));
 	   
+	   String emailVal = "test@test.co.uk";
+	   Validator validator = new Validator();
+		System.out.println(validator.isValidEmailAddress(emailVal));
+	   
    }
+   
+   
+   public boolean isValidEmailAddress(String email) {
+		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+		java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+		java.util.regex.Matcher m = p.matcher(email);
+		return m.matches();
+	}
    
    
 }
