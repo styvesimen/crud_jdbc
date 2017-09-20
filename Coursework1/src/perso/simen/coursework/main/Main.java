@@ -84,10 +84,6 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "12345");
 			Statement mystmt = connection.createStatement();	
 			
-			ResultSet rs = mystmt.executeQuery("select * from Customer"); 
-			while(rs.next()){ 
-				System.out.println(rs.getInt(1)+"\t\t"+rs.getString(2)+"\t\t"+rs.getString(3)+"\t\t"+rs.getString(4)+"\t\t"+rs.getString(5)+"\t\t");
-			}
 			
 			System.out.println("=======UPDATE User Details=======\n");
 			System.out.println("Enter the id of the customer you want to update: ");
@@ -101,8 +97,16 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			System.out.println("Email : ");
 			String email1 = scanner.next();
 
+
+			ResultSet rs = mystmt.executeQuery("select * from Customer"); 
+			while(rs.next()){ 
+				System.out.println(rs.getInt(1)+"\t\t"+rs.getString(2)+"\t\t"+rs.getString(3)+"\t\t"+rs.getString(4)+"\t\t"+rs.getString(5)+"\t\t");
+			}
 			
-			mystmt.executeUpdate("update Customer set firstname="+firstname1+",name="+name1+",dob="+dob1+",email="+email1+" where customer_id="+id1+"");
+			String query = "update Customer set firstname='"+firstname1+"',name='"+name1+"',dob='"+dob1+"',email='"+email1+"' where customer_id="+id1;
+			
+			System.out.println("UPDATE QUERY: "+query);
+			mystmt.executeUpdate(query);
 			System.out.println("update complete successfully");
 			
 			
