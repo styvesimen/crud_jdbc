@@ -54,40 +54,60 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			System.out.println("=======Please fill the form of the new user=======\n");
 			System.out.println("Enter the id of the new customer : ");
 			int id = scanner.nextInt();
-			System.out.println("Firstname : ");
-			String firstname = scanner.next();
-			System.out.println("Name : ");
-			String name = scanner.next();
+			String firstname;
 			
-			System.out.println("Email : ");
-			String email = scanner.next();
-			if(!Valid.isValidEmailAddress(email)){
-				System.out.println("Email Format invalid !");
-				showInputForm(scanner);
+			System.out.println("\n Firstname : ");
+			firstname = scanner.next();
+			while(!firstname.matches("[a-zA-Z_]+")){
+			    System.out.println("\n Invalid First Name !");
+			    System.out.println("\n Firstname : ");
+				firstname = scanner.next();
 			}
-			
-//			int r =getEmailInput(scanner, mystmt, id, firstname, name, dob);
-//			if(r!=1){
-//				
-//				System.out.println("\n Do you want to try again ? y/n");
-//				String TryAgain = scanner.next();
-//				if (TryAgain.equalsIgnoreCase("y")){
-//					showInputForm(scanner);
-//				}
 			
 			scanner.nextLine();
 			
+			System.out.println("\n Name : ");
+			String name = scanner.next();
+			while(!name.matches("[a-zA-Z_]+")){
+			    System.out.println("\n Invalid Name !");
+			    System.out.println("\n Name : ");
+				name = scanner.next();
+			}
+			
+			scanner.nextLine();
+			
+			System.out.println("Email : ");
+			String email = scanner.next();
+			while(!Valid.isValidEmailAddress(email)){
+				System.out.println("Email Format invalid !");
+				System.out.println("\n Email : ");
+				email = scanner.next();
+			}
+			
+			scanner.nextLine();
+			
+			
 			System.out.println("Date of Birth (dd/mm/yyyy): ");
+			String dob = scanner.next();
+			while(!Valid.validate(dob)){
+				System.out.println("Date Format invalid !");
+				System.out.println("\n Date of Birth (dd/mm/yyyy): ");
+				dob = scanner.next();
+			}
+			
+			mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
+			
+			//System.out.println("Date of Birth (dd/mm/yyyy): ");
 			//String dob = scanner.next();
-			int re =getDOBInput(scanner, mystmt, id, firstname, name, email);
-			if(re!=1){
-				
-				System.out.println("\n Do you want to try again ? y/n");
-				String wantToTryAgain = scanner.next();
-				if (wantToTryAgain.equalsIgnoreCase("y")){
-					showInputForm(scanner);
-				}
-			   }
+//			int re =getDOBInput(scanner, mystmt, id, firstname, name, email);
+//			if(re!=1){
+//				
+//				System.out.println("\n Do you want to try again ? y/n");
+//				String wantToTryAgain = scanner.next();
+//				if (wantToTryAgain.equalsIgnoreCase("y")){
+//					showInputForm(scanner);
+//				}
+//			   }
 			
 		}catch(ClassNotFoundException e){
 			e.printStackTrace();
@@ -117,14 +137,45 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			System.out.println("=======UPDATE User Details=======\n");
 			System.out.println("Enter the id of the customer you want to update: ");
 			int id1 = scanner.nextInt();
-			System.out.println("Firstname : ");
+			
+			System.out.println("\n Firstname : ");
 			String firstname1 = scanner.next();
-			System.out.println("Name : ");
+			while(!firstname1.matches("[a-zA-Z_]+")){
+			    System.out.println("\n Invalid First Name !");
+			    System.out.println("\n Firstname : ");
+				firstname1 = scanner.next();
+			}
+			
+			scanner.nextLine();
+			
+			System.out.println("\n Name : ");
 			String name1 = scanner.next();
-			System.out.println("Date of Birth : ");
-			String dob1 = scanner.next();
+			while(!name1.matches("[a-zA-Z_]+")){
+			    System.out.println("\n Invalid Name !");
+			    System.out.println("\n Name : ");
+				name1 = scanner.next();
+			}
+			
+			scanner.nextLine();
+			
 			System.out.println("Email : ");
 			String email1 = scanner.next();
+			while(!Valid.isValidEmailAddress(email1)){
+				System.out.println("Email Format invalid !");
+				System.out.println("\n Email : ");
+				email1 = scanner.next();
+			}
+			
+			scanner.nextLine();
+			
+			
+			System.out.println("Date of Birth (dd/mm/yyyy): ");
+			String dob1 = scanner.next();
+			while(!Valid.validate(dob1)){
+				System.out.println("Date Format invalid !");
+				System.out.println("\n Date of Birth (dd/mm/yyyy): ");
+				dob1 = scanner.next();
+			}
 				
 			ResultSet rs = mystmt.executeQuery("select * from Customer"); 
 			while(rs.next()){ 
@@ -133,7 +184,7 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			
 			String query = "update Customer set firstname='"+firstname1+"',name='"+name1+"',dob='"+dob1+"',email='"+email1+"' where customer_id="+id1;
 			
-			System.out.println("UPDATE QUERY: "+query);
+			//System.out.println("UPDATE QUERY: "+query);
 			mystmt.executeUpdate(query);
 			System.out.println("update complete successfully");
 			
