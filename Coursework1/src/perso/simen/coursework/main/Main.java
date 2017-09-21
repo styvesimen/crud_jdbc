@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.util.Scanner;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
+
 
 import perso.simen.coursework.utilities.Validator;
 
@@ -280,43 +280,43 @@ if(choice == 4){
 		return m.matches();
 	}
 	
-	private static int getDOBInput(Scanner scanner, Statement mystmt, int id, String firstname, String name, String email){
-		String dob = scanner.nextLine();
-		if(Valid.validate(dob)){
-		   try {
-			   mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
-			int result = 1;
-			return result;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		}else{
-			System.out.println("The date format is not appropriate !");
-			
-			try {
-				showInputForm(scanner);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		return 0;
-	}
+//	private static int getDOBInput(Scanner scanner, Statement mystmt, int id, String firstname, String name, String email){
+//		String dob = scanner.nextLine();
+//		if(Valid.validate(dob)){
+//		   try {
+//			   mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
+//			int result = 1;
+//			return result;
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		}else{
+//			System.out.println("The date format is not appropriate !");
+//			
+//			try {
+//				showInputForm(scanner);
+//			} catch (ClassNotFoundException e) {
+//				e.printStackTrace();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			} catch (ParseException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		return 0;
+//	}
 
-	private static int getEmailInput(Scanner scanner, Statement mystmt, int id, String firstname, String dob, String name) throws SQLException{
-		String email = scanner.nextLine();
-	
-		if(Valid.isValidEmailAddress(email)){
-		   
-			   mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
-			int result = 1;
-			return result;
-		}else System.out.println("The email format is not valid !");
-		return 0;
-	}
+//	private static int getEmailInput(Scanner scanner, Statement mystmt, int id, String firstname, String dob, String name) throws SQLException{
+//		String email = scanner.nextLine();
+//	
+//		if(Valid.isValidEmailAddress(email)){
+//		   
+//			   mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
+//			int result = 1;
+//			return result;
+//		}else System.out.println("The email format is not valid !");
+//		return 0;
+//	}
 	
 }
 
