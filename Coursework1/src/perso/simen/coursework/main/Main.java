@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
+
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import perso.simen.coursework.utilities.Validator;
 
@@ -16,12 +16,12 @@ import perso.simen.coursework.utilities.Validator;
 
 public class Main {
 	
-	static Validator dateValid;
+	static Validator Valid;
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, ParseException {
 		
-		if (dateValid == null){
-			dateValid = new Validator();
+		if (Valid == null){
+			Valid = new Validator();
 		}
 		
 		System.out.println("====== Customer Management =======\n\n");
@@ -61,25 +61,40 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			
 			System.out.println("Email : ");
 			String email = scanner.next();
-			scanner.nextLine();
-			System.out.println("Date of Birth (dd/mm/yyyy): ");
-			int r =getDOBInput(scanner, mystmt, id, firstname, name, email);
-			if(r==1){
-				System.out.println("insert complete successfully");
+			if(!Valid.isValidEmailAddress(email)){
+				System.out.println("Email Format invalid !");
+				showInputForm(scanner);
 			}
-			else{
+			
+//			int r =getEmailInput(scanner, mystmt, id, firstname, name, dob);
+//			if(r!=1){
+//				
+//				System.out.println("\n Do you want to try again ? y/n");
+//				String TryAgain = scanner.next();
+//				if (TryAgain.equalsIgnoreCase("y")){
+//					showInputForm(scanner);
+//				}
+			
+			scanner.nextLine();
+			
+			System.out.println("Date of Birth (dd/mm/yyyy): ");
+			//String dob = scanner.next();
+			int re =getDOBInput(scanner, mystmt, id, firstname, name, email);
+			if(re!=1){
+				
 				System.out.println("\n Do you want to try again ? y/n");
 				String wantToTryAgain = scanner.next();
 				if (wantToTryAgain.equalsIgnoreCase("y")){
 					showInputForm(scanner);
 				}
-			}
+			   }
+			
 		}catch(ClassNotFoundException e){
 			e.printStackTrace();
 		}catch(SQLException ex){
 			ex.printStackTrace();
 		}
-		
+		System.out.println("\n The insertion has been successful !\n\n");
 		System.out.println("Do you want to continue y/n");
 		String wantToContinue = scanner.next();
 		
@@ -207,36 +222,6 @@ if(choice == 4){
 	}
 
 
-	private static int DOBInput(Scanner scanner, Statement mystmt, int id, String firstname, String name, String email) {
-		String dob = scanner.nextLine();
-		if(dateValid.validate(dob)){
-		   try {
-			mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
-			int result = 1;
-			return result;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		}else{
-			System.out.println("The date format is not appropriate !");
-			
-			try {
-				showInputForm(scanner);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return 0;
-}
-
 	public boolean isValidEmailAddress(String email) {
 		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
 		java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
@@ -246,13 +231,12 @@ if(choice == 4){
 	
 	private static int getDOBInput(Scanner scanner, Statement mystmt, int id, String firstname, String name, String email){
 		String dob = scanner.nextLine();
-		if(dateValid.validate(dob)){
+		if(Valid.validate(dob)){
 		   try {
 			   mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
 			int result = 1;
 			return result;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		}else{
@@ -261,19 +245,27 @@ if(choice == 4){
 			try {
 				showInputForm(scanner);
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		return 0;
 	}
 
+	private static int getEmailInput(Scanner scanner, Statement mystmt, int id, String firstname, String dob, String name) throws SQLException{
+		String email = scanner.nextLine();
+	
+		if(Valid.isValidEmailAddress(email)){
+		   
+			   mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
+			int result = 1;
+			return result;
+		}else System.out.println("The email format is not valid !");
+		return 0;
+	}
 	
 }
 
