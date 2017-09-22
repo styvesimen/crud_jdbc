@@ -14,15 +14,18 @@ import perso.simen.coursework.utilities.Validator;
 
 
 
+
 public class Main {
 	
-	static Validator Valid;
+	//static Validator Valid;
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, ParseException {
 		
-		if (Valid == null){
-			Valid = new Validator();
-		}
+		
+		
+//		if (Valid == null){
+//			Valid = new Validator();
+//		}
 		
 		System.out.println("====== Customer Management =======\n\n");
 		Scanner scanner = new Scanner(System.in);
@@ -126,7 +129,7 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			System.out.println("Email : ");
 			String email = scanner.next();
 			int k1=4,l1=1;
-			while(!Valid.isValidEmailAddress(email) && l1<k1){
+			while(!Validator.getValid().isValidEmailAddress(email) && l1<k1){
 				System.out.println("Email Format invalid !");
 				System.out.println("\n Email : ");
 				email = scanner.next();
@@ -152,7 +155,7 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			System.out.println("Date of Birth (dd/mm/yyyy): ");
 			String dob = scanner.next();
 			int j1=4,i1=1;
-			while(!Valid.validate(dob) && i1<j1){
+			while(!Validator.getValid().validate(dob) && i1<j1){
 				System.out.println("Date Format invalid !");
 				System.out.println("\n Date of Birth (dd/mm/yyyy): ");
 				dob = scanner.next();
@@ -274,7 +277,7 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			System.out.println("Email : ");
 			String email1 = scanner.next();
 			int k1=4,l1=1;
-			while(!Valid.isValidEmailAddress(email1) && l1<k1){
+			while(!Validator.getValid().isValidEmailAddress(email1) && l1<k1){
 				System.out.println("Email Format invalid !");
 				System.out.println("\n Email : ");
 				email1 = scanner.next();
@@ -300,7 +303,7 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			System.out.println("Date of Birth (dd/mm/yyyy): ");
 			String dob1 = scanner.next();
 			int j1=4,i1=1;
-			while(!Valid.validate(dob1) && i1<j1){
+			while(!Validator.getValid().validate(dob1) && i1<j1){
 				System.out.println("Date Format invalid !");
 				System.out.println("\n Date of Birth (dd/mm/yyyy): ");
 				dob1 = scanner.next();

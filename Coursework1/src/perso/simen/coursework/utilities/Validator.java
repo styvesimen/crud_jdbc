@@ -3,19 +3,32 @@ package perso.simen.coursework.utilities;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class Validator {
 
-
+		  private static Validator valid = null;
+	
 		  private Pattern pattern;
 		  private Matcher matcher;
 
 		  private static final String DATE_PATTERN =
 		          "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)";
 
-		  public Validator(){
+		  private Validator(){   //a constructor is required to create an object of the class
+			  
 			  pattern = Pattern.compile(DATE_PATTERN);
-		  }
-
+			  
+		  } 
+			
+			public static Validator getValid(){
+				if(valid==null){
+					valid = new Validator();
+				}
+				return valid;
+			}
+		  
+		  
+		  
 		  /**
 		   * Validate date format with regular expression
 		   * @param date date address for validation
