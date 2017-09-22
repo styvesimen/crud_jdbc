@@ -210,8 +210,20 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			Statement mystmt = connection.createStatement();	
 			
 			System.out.println("=======UPDATE User Details=======\n");
+			
+			
 			System.out.println("Enter the id of the customer you want to update: ");
-			int id1 = scanner.nextInt();
+			 //= scanner.nextInt();
+			int id1;
+			do{
+			int j2=4,i2=1;
+			while(!scanner.hasNextInt() && i2<j2){
+			    System.out.println("\n Invalid id !");
+			    scanner.next();
+			}
+			id1 = scanner.nextInt();
+			}while (id1 <=0);
+			
 			
 			System.out.println("\n Firstname : ");
 			String firstname1 = scanner.next();
