@@ -50,14 +50,36 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "12345");
 			
 			Statement mystmt = connection.createStatement();	
+			int id;
 			
 			System.out.println("=======Please fill the form of the new user=======\n");
+			do{
 			System.out.println("Enter the id of the new customer : ");
-			int id = scanner.nextInt();
-			String firstname;
-			int j=4,i=1;
+			 //= scanner.nextInt();
+			int j2=4,i2=1;
+			while(!scanner.hasNextInt() && i2<j2){
+			    System.out.println("\n Invalid id !");
+			    scanner.next();
+			}
+			id = scanner.nextInt();
+			}while (id <=0);
+			
+//			if(i2==j2){
+//				System.out.println("Sorry you did too many incorrect attempts.. !");
+//				System.out.println("\nDo you want to continue y/n");
+//				String wantToContinue = scanner.next();
+//				
+//				if (wantToContinue.equalsIgnoreCase("y")){
+//					showInputForm(scanner);
+//				}else
+//				System.out.println("Thanks, see ya later. ");
+//				return;
+//			}
+			
+			
 			System.out.println("\n Firstname : ");
-			firstname = scanner.next();
+			String firstname = scanner.next();
+			int j=4,i=1;
 			while(!firstname.matches("[a-zA-Z_]+") && i<j){
 			    System.out.println("\n Invalid First Name !");
 			    System.out.println("\n Firstname : ");
@@ -65,8 +87,15 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 				i++;
 			}
 			if(i==j){
-				System.out.println("Sorry you did too many incorrect attempts.. Good Bye !");
-			return;
+				System.out.println("Sorry you did too many incorrect attempts.. !");
+				System.out.println("\nDo you want to continue y/n");
+				String wantToContinue = scanner.next();
+				
+				if (wantToContinue.equalsIgnoreCase("y")){
+					showInputForm(scanner);
+				}else
+				System.out.println("Thanks, see ya later. ");
+				return;
 			}
 			
 			scanner.nextLine();
@@ -81,8 +110,15 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 				l++;
 			}
 			if(l==k){
-				System.out.println("Sorry you did too many incorrect attempts.. Good Bye !");
-			return;
+				System.out.println("Sorry you did too many incorrect attempts.. !");
+				System.out.println("\nDo you want to continue y/n");
+				String wantToContinue = scanner.next();
+				
+				if (wantToContinue.equalsIgnoreCase("y")){
+					showInputForm(scanner);
+				}else
+				System.out.println("Thanks, see ya later. ");
+				return;
 			}
 			
 			scanner.nextLine();
@@ -97,8 +133,17 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 				l1++;
 			}
 			if(l1==k1){
-				System.out.println("Sorry you did too many incorrect attempts.. Good Bye !");
-			return;
+				System.out.println("Sorry you did too many incorrect attempts..  !");
+				System.out.println("\nDo you want to continue y/n");
+				String wantToContinue = scanner.next();
+				
+				if (wantToContinue.equalsIgnoreCase("y")){
+					showInputForm(scanner);
+				}else
+				System.out.println("Thanks, see ya later. ");
+				return;
+				
+			
 			}
 			
 			scanner.nextLine();
@@ -115,7 +160,14 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			}
 			if(i1==j1){
 				System.out.println("Sorry you did too many incorrect attempts.. Good Bye !");
-			return;
+				System.out.println("\nDo you want to continue y/n");
+				String wantToContinue = scanner.next();
+				
+				if (wantToContinue.equalsIgnoreCase("y")){
+					showInputForm(scanner);
+				}else
+				System.out.println("Thanks, see ya later. ");
+				return;
 			}
 			
 			mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
@@ -163,30 +215,71 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			
 			System.out.println("\n Firstname : ");
 			String firstname1 = scanner.next();
-			while(!firstname1.matches("[a-zA-Z_]+")){
+			int j=4,i=1;
+			while(!firstname1.matches("[a-zA-Z_]+") && i<j){
 			    System.out.println("\n Invalid First Name !");
 			    System.out.println("\n Firstname : ");
 				firstname1 = scanner.next();
+				i++;
+			}
+			if(i==j){
+				System.out.println("Sorry you did too many incorrect attempts.. !");
+				System.out.println("\nDo you want to continue y/n");
+				String wantToContinue = scanner.next();
+				
+				if (wantToContinue.equalsIgnoreCase("y")){
+					showInputForm(scanner);
+				}else
+				System.out.println("Thanks, see ya later. ");
+				return;
 			}
 			
 			scanner.nextLine();
 			
 			System.out.println("\n Name : ");
 			String name1 = scanner.next();
-			while(!name1.matches("[a-zA-Z_]+")){
+			int k=4,l=1;
+			while(!name1.matches("[a-zA-Z_]+") && l<k){
 			    System.out.println("\n Invalid Name !");
 			    System.out.println("\n Name : ");
 				name1 = scanner.next();
+				l++;
+			}
+			if(l==k){
+				System.out.println("Sorry you did too many incorrect attempts.. !");
+				System.out.println("\nDo you want to continue y/n");
+				String wantToContinue = scanner.next();
+				
+				if (wantToContinue.equalsIgnoreCase("y")){
+					showInputForm(scanner);
+				}else
+				System.out.println("Thanks, see ya later. ");
+				return;
 			}
 			
 			scanner.nextLine();
 			
 			System.out.println("Email : ");
 			String email1 = scanner.next();
-			while(!Valid.isValidEmailAddress(email1)){
+			int k1=4,l1=1;
+			while(!Valid.isValidEmailAddress(email1) && l1<k1){
 				System.out.println("Email Format invalid !");
 				System.out.println("\n Email : ");
 				email1 = scanner.next();
+				l1++;
+			}
+			if(l1==k1){
+				System.out.println("Sorry you did too many incorrect attempts..  !");
+				System.out.println("\nDo you want to continue y/n");
+				String wantToContinue = scanner.next();
+				
+				if (wantToContinue.equalsIgnoreCase("y")){
+					showInputForm(scanner);
+				}else
+				System.out.println("Thanks, see ya later. ");
+				return;
+				
+			
 			}
 			
 			scanner.nextLine();
@@ -194,12 +287,26 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			
 			System.out.println("Date of Birth (dd/mm/yyyy): ");
 			String dob1 = scanner.next();
-			while(!Valid.validate(dob1)){
+			int j1=4,i1=1;
+			while(!Valid.validate(dob1) && i1<j1){
 				System.out.println("Date Format invalid !");
 				System.out.println("\n Date of Birth (dd/mm/yyyy): ");
 				dob1 = scanner.next();
+				i1++;
+			}
+			if(i1==j1){
+				System.out.println("Sorry you did too many incorrect attempts.. Good Bye !");
+				System.out.println("\nDo you want to continue y/n");
+				String wantToContinue = scanner.next();
+				
+				if (wantToContinue.equalsIgnoreCase("y")){
+					showInputForm(scanner);
+				}else
+				System.out.println("Thanks, see ya later. ");
+				return;
 			}
 				
+			
 			ResultSet rs = mystmt.executeQuery("select * from Customer"); 
 			while(rs.next()){ 
 				System.out.println(rs.getInt(1)+"\t\t"+rs.getString(2)+"\t\t"+rs.getString(3)+"\t\t"+rs.getString(4)+"\t\t"+rs.getString(5)+"\t\t");
