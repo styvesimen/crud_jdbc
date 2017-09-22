@@ -55,33 +55,50 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			System.out.println("Enter the id of the new customer : ");
 			int id = scanner.nextInt();
 			String firstname;
-			
+			int j=4,i=1;
 			System.out.println("\n Firstname : ");
 			firstname = scanner.next();
-			while(!firstname.matches("[a-zA-Z_]+")){
+			while(!firstname.matches("[a-zA-Z_]+") && i<j){
 			    System.out.println("\n Invalid First Name !");
 			    System.out.println("\n Firstname : ");
 				firstname = scanner.next();
+				i++;
+			}
+			if(i==j){
+				System.out.println("Sorry you did too many incorrect attempts.. Good Bye !");
+			return;
 			}
 			
 			scanner.nextLine();
 			
 			System.out.println("\n Name : ");
 			String name = scanner.next();
-			while(!name.matches("[a-zA-Z_]+")){
+			int k=4,l=1;
+			while(!name.matches("[a-zA-Z_]+") && l<k){
 			    System.out.println("\n Invalid Name !");
 			    System.out.println("\n Name : ");
 				name = scanner.next();
+				l++;
+			}
+			if(l==k){
+				System.out.println("Sorry you did too many incorrect attempts.. Good Bye !");
+			return;
 			}
 			
 			scanner.nextLine();
 			
 			System.out.println("Email : ");
 			String email = scanner.next();
-			while(!Valid.isValidEmailAddress(email)){
+			int k1=4,l1=1;
+			while(!Valid.isValidEmailAddress(email) && l1<k1){
 				System.out.println("Email Format invalid !");
 				System.out.println("\n Email : ");
 				email = scanner.next();
+				l1++;
+			}
+			if(l1==k1){
+				System.out.println("Sorry you did too many incorrect attempts.. Good Bye !");
+			return;
 			}
 			
 			scanner.nextLine();
@@ -89,10 +106,16 @@ public static void showInputForm(Scanner scanner) throws ClassNotFoundException,
 			
 			System.out.println("Date of Birth (dd/mm/yyyy): ");
 			String dob = scanner.next();
-			while(!Valid.validate(dob)){
+			int j1=4,i1=1;
+			while(!Valid.validate(dob) && i1<j1){
 				System.out.println("Date Format invalid !");
 				System.out.println("\n Date of Birth (dd/mm/yyyy): ");
 				dob = scanner.next();
+				i1++;
+			}
+			if(i1==j1){
+				System.out.println("Sorry you did too many incorrect attempts.. Good Bye !");
+			return;
 			}
 			
 			mystmt.executeUpdate("insert into Customer value('"+id+"','"+firstname+"','"+name+"','"+dob+"','"+email+"')");
