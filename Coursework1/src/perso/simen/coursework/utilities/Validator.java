@@ -20,7 +20,8 @@ public class Validator {
 			  
 		  } 
 			
-			public static Validator getValid(){
+			public static Validator getInstance(){ //we create a singleton class to avoid creating multiple object of 
+												   //the class throughout the lyfe cycle of the application
 				if(valid==null){
 					valid = new Validator();
 				}
